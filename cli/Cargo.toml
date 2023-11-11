@@ -1,0 +1,25 @@
+[package]
+name = "nagara-simple-wallet-cli"
+version = "1.0.0-alpha.12"
+edition = "2021"
+
+[dependencies]
+anyhow = { version = "1.0.75", features = ["backtrace"] }
+bigdecimal.workspace = true
+clap = { version = "3.2.25", features = [
+    "backtrace",
+    "cargo",
+    "derive",
+    "env",
+    "regex",
+    "terminal_size",
+    "unicode",
+    "wrap_help",
+    "yaml",
+] }
+hex.workspace = true
+nagara-identities.workspace = true
+nagara-simple-wallet.workspace = true
+ss58-registry.workspace = true
+tokio = { version = "1.33.0", features = ["full"] }
+zsn-logging = { workspace = true, features = ["main"] }
