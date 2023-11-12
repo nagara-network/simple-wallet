@@ -3,7 +3,7 @@ resolver = "2"
 members = ["cli", "lib"]
 
 [patch.crates-io]
-ss58-registry = { git = "https://github.com/nagara-network/ss58-registry.git", rev = "cc08148" }
+ss58-registry = { git = "https://github.com/nagara-network/ss58-registry.git", rev = "0038a88" }
 
 [workspace.dependencies]
 # local
@@ -18,7 +18,7 @@ nagara-logging = { git = "https://github.com/nagara-network/ecosystem-libraries.
 parity-scale-codec = "3.6.5"
 safer-ffi = { version = "0.1.4", features = ["log", "proc_macros", "tokio"] }
 serde = { version = "1.0.192", features = ["derive"] }
-ss58-registry = { git = "https://github.com/nagara-network/ss58-registry.git", rev = "cc08148" }
+ss58-registry = { git = "https://github.com/nagara-network/ss58-registry.git", rev = "0038a88" }
 subxt = { version = "0.32.1", default-features = false, features = ["getrandom", "jsonrpsee"] }
 thiserror = "1.0.50"
 zsn-logging = { git = "https://github.com/bamboolabs-foundation/zsn-common-lib", version = "0.1.2", features = [
