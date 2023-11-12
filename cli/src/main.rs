@@ -8,17 +8,17 @@ enum Commands {
     },
     Transfer {
         /// Sender private key hex (starts with "0x"), can also be mnemonic. Always surround it with ""
-        #[clap(short, long)]
+        #[clap(short, long, value_parser)]
         private_key: String,
         /// Recipient's SS58 address
-        #[clap(short, long)]
+        #[clap(short, long, value_parser)]
         recipient: String,
         /// NGR Amount in decimal
-        #[clap(short, long)]
+        #[clap(short, long, value_parser)]
         amount: bigdecimal::BigDecimal,
-        /// Sender use sr25519 instead of ed25519
-        #[clap(short, long, default_value = "true")]
-        schnorrkel: bool,
+        /// Sender use ed25519 instead of sr25519
+        #[clap(short, long, action, default_value_t = false)]
+        edward: bool,
     },
 }
 
@@ -43,7 +43,7 @@ impl Commands {
                 let balance_decimal =
                     <bigdecimal::BigDecimal as bigdecimal::FromPrimitive>::from_u128(balance)
                         .unwrap();
-                let balance_decimal = balance_decimal / get_decimal_scaler();
+                let balance_decimal = std::ops::Div::div(balance_decimal, get_decimal_scaler());
 
                 zsn_logging::info!("Balance is:\n\n{balance_decimal} NGR");
             }
@@ -51,12 +51,17 @@ impl Commands {
                 private_key,
                 recipient,
                 amount,
-                schnorrkel,
+                edward,
             } => {
+                let schnorrkel = !edward;
+                let sender_address = instance.add_account(&private_key, schnorrkel)?;
+                zsn_logging::info!(
+                    "Sending from {sender_address} to {recipient} with the amount of {amount} ({})",
+                    if schnorrkel { "sr25519" } else { "ed25519" }
+                );
                 let amount_decimal = std::ops::Mul::mul(amount, get_decimal_scaler());
                 let amount = bigdecimal::ToPrimitive::to_u128(&amount_decimal)
                     .ok_or(anyhow::anyhow!("Bad digits!"))?;
-                let sender_address = instance.add_account(&private_key, schnorrkel)?;
                 let explorer_url = instance
                     .transfer(&sender_address, &recipient, amount)
                     .await?;

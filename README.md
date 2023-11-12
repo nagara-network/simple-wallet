@@ -31,8 +31,8 @@ USAGE:
 
 OPTIONS:
     -a, --amount <AMOUNT>              NGR Amount in decimal
+    -e, --edward                       Sender use ed25519 instead of sr25519
     -h, --help                         Print help information
     -p, --private-key <PRIVATE_KEY>    Sender private key hex (starts with "0x"), can also be mnemonic. Always surround it with ""
     -r, --recipient <RECIPIENT>        Recipient's SS58 address
-    -s, --schnorrkel <schnorrkel>      Sender use sr25519 instead of ed25519 [default: true]
 ```
