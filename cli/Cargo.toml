@@ -20,6 +20,6 @@ clap = { version = "3.2.25", features = [
 hex.workspace = true
 nagara-identities.workspace = true
 nagara-simple-wallet.workspace = true
+nagara-logging = { workspace = true, features = ["app"] }
 ss58-registry.workspace = true
 tokio = { version = "1.33.0", features = ["full"] }
-zsn-logging = { workspace = true, features = ["main"] }

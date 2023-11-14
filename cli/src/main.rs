@@ -32,7 +32,7 @@ fn get_decimal_scaler() -> bigdecimal::BigDecimal {
 
 impl Commands {
     async fn run() -> anyhow::Result<()> {
-        zsn_logging::init();
+        nagara_logging::init();
 
         let command = <Self as clap::Parser>::parse();
         let mut instance = nagara_simple_wallet::WalletInstance::create_with_default_url().await?;
@@ -45,7 +45,7 @@ impl Commands {
                         .unwrap();
                 let balance_decimal = std::ops::Div::div(balance_decimal, get_decimal_scaler());
 
-                zsn_logging::info!("Balance is:\n\n{balance_decimal} NGR");
+                nagara_logging::info!("Balance is:\n\n{balance_decimal} NGR");
             }
             Self::Transfer {
                 private_key,
@@ -55,7 +55,7 @@ impl Commands {
             } => {
                 let schnorrkel = !edward;
                 let sender_address = instance.add_account(&private_key, schnorrkel)?;
-                zsn_logging::info!(
+                nagara_logging::info!(
                     "Sending from {sender_address} to {recipient} with the amount of {amount} ({})",
                     if schnorrkel { "sr25519" } else { "ed25519" }
                 );
@@ -66,7 +66,7 @@ impl Commands {
                     .transfer(&sender_address, &recipient, amount)
                     .await?;
 
-                zsn_logging::info!("Transaction was successful, info:\n\n{explorer_url}");
+                nagara_logging::info!("Transaction was successful, info:\n\n{explorer_url}");
             }
         }
 
